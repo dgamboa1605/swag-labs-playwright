@@ -1,0 +1,4 @@
+playwright
+allure-pytest
+pytest
+pytest-asyncio

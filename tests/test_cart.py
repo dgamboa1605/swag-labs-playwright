@@ -1,3 +1,8 @@
+"""
+This module contains tests for the cart functionality of an e-commerce application 
+using Playwright and Pytest. 
+"""
+
 import pytest
 
 
@@ -8,6 +13,9 @@ from pages.cart_page import CartPage
 
 @pytest.mark.usefixtures("login_page")
 class TestCart:
+    """
+    TestCart class is responsible for testing the cart functionality.
+    """
 
     inventory_page: InventoryPage = None
     cart_page: CartPage = None
@@ -19,7 +27,7 @@ class TestCart:
         Fixture to set up the pages before each test is run.
 
         Args:
-            browser: The browser instance to be used for the tests.
+            page: The Playwright `Page` instance used to interact with the browser.
         """
         self.inventory_page = InventoryPage(page)
         self.cart_page = CartPage(page)
@@ -27,6 +35,10 @@ class TestCart:
 
     @pytest.mark.asyncio
     async def test_add_items_and_checkout(self):
+        """
+        Test to add items to the cart, proceed to checkout, 
+        and verify that the checkout process is successful.
+        """
         names = ["sauce-labs-backpack", "sauce-labs-bike-light"]
         await self.inventory_page.add_items_to_cart(names)
         await self.inventory_page.click_on_shopping_cart()

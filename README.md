@@ -72,6 +72,15 @@ wap-testing
 
 ## Running Tests
 
+Note:
+Before to run all test make sure you configure USER_USERNAME, USER_PASSWORD, and HEADLESS
+```bash
+export USER_USERNAME=my_username
+export USER_PASSWORD=my_password
+export HEADLESS=True
+```
+
+
 1. **Basic Test Execution**:
    To execute all tests, run the following command:
    ```bash

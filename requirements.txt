@@ -1,6 +1,6 @@
 playwright
 allure-pytest
 pytest
-pytest-asyncio
 pylint
-pytest-xdist
+pytest-playwright-visual
+axe-playwright-python

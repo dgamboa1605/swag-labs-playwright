@@ -4,6 +4,7 @@ This module defines the InventoryPage class, which inherits from BasePage.
 
 from playwright.async_api import Page
 from pages.base_page import BasePage
+from utilities.logger import Logger
 
 
 class InventoryPage(BasePage):
@@ -13,6 +14,7 @@ class InventoryPage(BasePage):
     such as sorting the items, retrieving the list of item names and prices,
     adding items to the shopping cart, and navigating to the shopping cart.
     """
+    logger = Logger(__name__)
 
     def __init__(self, page: Page):
         super().__init__(page)
@@ -29,7 +31,9 @@ class InventoryPage(BasePage):
         Args:
             sort_option (str): The sorting option (e.g., "Name (A to Z)", "Price (low to high)").
         """
+        self.logger.info(f"Sorting items by: {sort_option}")
         await self.select_option(self.sort_dropdown, sort_option)
+        self.logger.info("Items sorted successfully.")
 
     async def get_item_names(self) -> list[str]:
         """
@@ -38,8 +42,11 @@ class InventoryPage(BasePage):
         Returns:
             list[str]: A list of item names as strings.
         """
+        self.logger.info("Retrieving item names from the inventory page.")
         elements = await self.page.query_selector_all(self.item_names)
-        return [await element.inner_text() for element in elements]
+        item_names = [await element.inner_text() for element in elements]
+        self.logger.info(f"Retrieved item names: {item_names}")
+        return item_names
 
     async def get_item_prices(self) -> list[float]:
         """
@@ -48,8 +55,11 @@ class InventoryPage(BasePage):
         Returns:
             list[float]: A list of item prices as floats.
         """
+        self.logger.info("Retrieving item prices from the inventory page.")
         elements = await self.page.query_selector_all(self.item_prices)
-        return [float((await element.inner_text()).replace('$', '')) for element in elements]
+        item_prices = [float((await element.inner_text()).replace('$', '')) for element in elements]
+        self.logger.info(f"Retrieved item prices: {item_prices}")
+        return item_prices
 
     async def add_items_to_cart(self, names: list[str]) -> None:
         """
@@ -58,11 +68,15 @@ class InventoryPage(BasePage):
         Args:
             names (list[str]): A list of item names to be added to the shopping cart.
         """
+        self.logger.info(f"Adding items to cart: {names}")
         for name in names:
             await self.click(f"{self.add_to_cart_buttons}{name}")
+            self.logger.info(f"Added {name} to the cart.")
 
     async def click_on_shopping_cart(self) -> None:
         """
         Navigates to the shopping cart by clicking the shopping cart button.
         """
+        self.logger.info("Navigating to the shopping cart.")
         await self.click(self.shopping_cart_button)
+        self.logger.info("Navigated to the shopping cart successfully.")

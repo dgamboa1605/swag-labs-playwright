@@ -18,7 +18,7 @@ import os
 
 BROWSER = "chrome"
 URL = "https://www.saucedemo.com/"
-HEADLESS = False
+HEADLESS = os.environ.get('HEADLESS', 'False').lower() == 'true'
 MOBILE = True
 DEVICE_NAME = "iPhone X"
 LOG_LEVEL = "DEBUG"

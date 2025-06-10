@@ -4,3 +4,4 @@ pytest
 pylint
 pytest-playwright-visual
 axe-playwright-python
+setuptools~=56.0.0
